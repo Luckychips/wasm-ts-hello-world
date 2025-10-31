@@ -1,0 +1,14 @@
+{
+  "name": "wasm-ts-hello-world",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "copy-wasm": "cp -r ../wasm/pkg/* public/wasm/pkg",
+    "dev": "npm run copy-wasm && vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "typescript": "^5.0.0"
+  }
+}

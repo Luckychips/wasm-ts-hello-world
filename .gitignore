@@ -1,0 +1,6 @@
+.idea
+wasm/pkg
+wasm/target
+wasm/Cargo.lock
+web/public/wasm
+package-lock.json
