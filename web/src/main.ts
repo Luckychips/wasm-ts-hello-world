@@ -1,4 +1,4 @@
-import init, { add, greet } from '../public/wasm/pkg/wasm_ts_hello_world';
+import init, { add, greet, calculate_crc, string_to_bytes } from '../public/wasm/pkg/wasm_ts_hello_world';
 
 async function run() {
     await init();
@@ -9,23 +9,6 @@ async function run() {
 const NORDIC_UART_SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 const TX_CHARACTERISTIC_UUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
 const RX_CHARACTERISTIC_UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
-
-function calculateCRC(bytes: any) {
-    let crc = 0xFFFF;
-    for (let byte of bytes) {
-        crc ^= (byte << 8);
-        for (let i = 0; i < 8; i++) {
-            if ((crc & 0x8000) !== 0) {
-                crc = (crc << 1) ^ 0x1021;
-            } else {
-                crc <<= 1;
-            }
-            crc &= 0xFFFF; // 16비트 유지
-        }
-    }
-
-    return new Uint8Array([crc & 0xFF, (crc >> 8) & 0xFF]);
-}
 
 async function connectToBLEDevice() {
     if (navigator.bluetooth) {
@@ -51,13 +34,13 @@ async function connectToBLEDevice() {
                             });
                             await txCharacteristic.startNotifications();
 
-                            const activate = new TextEncoder().encode('');
-                            const activateCrc = calculateCRC(activate);
+                            const activate = string_to_bytes('sta?1');
+                            const activateCrc = calculate_crc(activate)
                             const activatePacket = new Uint8Array([...activate, ...activateCrc]);
                             await rxCharacteristic.writeValue(activatePacket);
                             setTimeout(async () => {
-                                const clearing = new TextEncoder().encode('');
-                                const clearingCrc = calculateCRC(clearing);
+                                const clearing = string_to_bytes('ssr?');
+                                const clearingCrc = calculate_crc(clearing);
                                 const clearingPacket = new Uint8Array([...clearing, ...clearingCrc]);
                                 await rxCharacteristic.writeValue(clearingPacket);
                             }, 2000);
