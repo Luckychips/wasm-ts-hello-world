@@ -1,3 +1,4 @@
+// wasm-pack build wasm  --target web
 use wasm_bindgen::prelude::*;
 use web_sys::console;
 
