@@ -2,5 +2,5 @@
 wasm/pkg
 wasm/target
 wasm/Cargo.lock
-web/public/wasm
+web/public/wasm/pkg
 package-lock.json
