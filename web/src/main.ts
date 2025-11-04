@@ -1,10 +1,4 @@
-import init, { add, greet, calculate_crc, string_to_bytes } from '../public/wasm/pkg/wasm_ts_hello_world';
-
-async function run() {
-    await init();
-    greet("TypeScript + Wasm");
-    console.log("3 + 5 =", add(3, 5));
-}
+import { calculate_crc, string_to_bytes } from '../public/wasm/pkg';
 
 const NORDIC_UART_SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 const TX_CHARACTERISTIC_UUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
@@ -56,5 +50,4 @@ async function connectToBLEDevice() {
     }
 }
 
-run();
 connectToBLEDevice();
