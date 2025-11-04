@@ -1,4 +1,4 @@
-import init, { calculate_crc, string_to_bytes } from '../public/wasm/pkg';
+import init, { calculate_crc, string_to_bytes } from '@wasm/wasm_ts_hello_world';
 
 const NORDIC_UART_SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 const TX_CHARACTERISTIC_UUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
@@ -35,7 +35,7 @@ async function sendMessage(rx: any, input: string) {
     const bytes = string_to_bytes(input);
     const crc = calculate_crc(bytes)
     const packet = new Uint8Array([...bytes, ...crc]);
-    await rx.writeValue(packet);
+    rx.writeValue(packet);
 }
 
 async function toConnect() {
