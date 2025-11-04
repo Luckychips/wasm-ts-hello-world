@@ -12,8 +12,8 @@
       "@/*": ["src/*"],
       "@wasm/*": ["public/wasm/pkg/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "tsconfig.node.json" }]
 }
